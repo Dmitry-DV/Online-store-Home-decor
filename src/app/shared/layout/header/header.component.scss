@@ -31,12 +31,12 @@ header.header {
             border-bottom: 1px solid transparent;
 
             &.active {
-              border-bottom-color: $base-text-color;
+              border-bottom-color: $green-text-color;
             }
 
             a {
               font-size: 16px;
-              color: $base-text-color;
+              color: $green-text-color;
               cursor: pointer;
               text-decoration: none;
             }
@@ -46,7 +46,7 @@ header.header {
 
       .header-top-phone {
         font-size: 16px;
-        color: $base-text-color;
+        color: $green-text-color;
         margin-right: 59px;
         text-decoration: none;
       }
@@ -75,7 +75,7 @@ header.header {
             border-radius: 50px;
             background: #b6d5b9;
             font-size: 9px;
-            color: $base-text-color;
+            color: $green-text-color;
           }
         }
       }
@@ -101,12 +101,12 @@ header.header {
             border-bottom: 1px solid transparent;
 
             &.active {
-              border-bottom-color: $base-text-color;
+              border-bottom-color: $green-text-color;
             }
 
             a {
               font-size: 16px;
-              color: $base-text-color;
+              color: $green-text-color;
               text-decoration: none;
               cursor: pointer;
             }
@@ -122,7 +122,7 @@ header.header {
           border-radius: 30px;
           padding: 10px 10px 10px 43px;
           font-size: 16px;
-          color: $base-text-color;
+          color: $green-text-color;
           width: 214px;
           height: 41px;
           box-sizing: border-box;
