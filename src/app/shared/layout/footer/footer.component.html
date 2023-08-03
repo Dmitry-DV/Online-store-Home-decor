@@ -29,20 +29,8 @@
       <div class="footer-head">Категории</div>
       <nav class="footer-items">
         <ul>
-          <li>
-            <a>Кактусы</a>
-          </li>
-          <li>
-            <a>Суккуленты</a>
-          </li>
-          <li>
-            <a>Бонсаи</a>
-          </li>
-          <li>
-            <a>Комнатные растения</a>
-          </li>
-          <li>
-            <a>Флорариумы</a>
+          <li *ngFor="let categories of categories">
+            <a>{{ categories.name }}</a>
           </li>
         </ul>
       </nav>
