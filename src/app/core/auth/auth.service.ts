@@ -20,6 +20,14 @@ export class AuthService {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey);
   }
 
+  signup(email: string, password: string, passwordRepeat: string): Observable<DefaultResponseType | LoginResponseType> {
+    return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'signup', {
+      email,
+      password,
+      passwordRepeat,
+    });
+  }
+
   login(email: string, password: string, rememberMe: boolean): Observable<DefaultResponseType | LoginResponseType> {
     return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'login', {
       email,
