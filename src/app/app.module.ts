@@ -11,10 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { SharedModule } from './shared/shared.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent, HeaderComponent, FooterComponent, MainComponent],
-  imports: [BrowserModule, HttpClientModule, MatSnackBarModule, MatMenuModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [BrowserModule, HttpClientModule, MatSnackBarModule, MatMenuModule, SharedModule, CarouselModule, AppRoutingModule, BrowserAnimationsModule],
   providers: [
     //snackbar options
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
