@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { MainComponent } from './views/main/main.component';
 import { UserModule } from './views/user/user.module';
+import { ProductModule } from './views/product/product.module';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: '', component: MainComponent },
       { path: '', loadChildren: () => import('./views/user/user.module').then(m => m.UserModule) },
+      { path: '', loadChildren: () => import('./views/product/product.module').then(m => m.ProductModule) },
     ],
   },
 ];
