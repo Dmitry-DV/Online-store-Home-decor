@@ -23,36 +23,44 @@ export class SignupComponent {
   constructor(private fb: FormBuilder, private authService: AuthService, private _snackBar: MatSnackBar, private router: Router) {}
 
   signup(): void {
-    if (this.signupForm.valid && this.signupForm.value.email && this.signupForm.value.password && this.signupForm.value.passwordRepeat && this.signupForm.value.agree) {
-      this.authService.signup(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.passwordRepeat).subscribe({
-        next: (data: DefaultResponseType | LoginResponseType) => {
-          let error = null;
-          if ((data as DefaultResponseType).error !== undefined) {
-            error = (data as DefaultResponseType).message;
-          }
-          let loginResponse = data as LoginResponseType;
-          if (!loginResponse.accessToken || !loginResponse.refreshToken || !loginResponse.userId) {
-            error = 'Ошибка авторизации';
-          }
-          if (error) {
-            this._snackBar.open(error);
-            throw new Error(error);
-          }
+    if (
+      this.signupForm.valid &&
+      this.signupForm.value.email &&
+      this.signupForm.value.password &&
+      this.signupForm.value.passwordRepeat &&
+      this.signupForm.value.agree
+    ) {
+      this.authService
+        .signup(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.passwordRepeat)
+        .subscribe({
+          next: (data: DefaultResponseType | LoginResponseType) => {
+            let error = null;
+            if ((data as DefaultResponseType).error !== undefined) {
+              error = (data as DefaultResponseType).message;
+            }
+            let loginResponse = data as LoginResponseType;
+            if (!loginResponse.accessToken || !loginResponse.refreshToken || !loginResponse.userId) {
+              error = 'Ошибка авторизации';
+            }
+            if (error) {
+              this._snackBar.open(error);
+              throw new Error(error);
+            }
 
-          this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
-          this.authService.userId = loginResponse.userId;
+            this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
+            this.authService.userId = loginResponse.userId;
 
-          this._snackBar.open('Вы успешно зарегистрировались');
-          this.router.navigate(['/']);
-        },
-        error: (errorResponse: HttpErrorResponse) => {
-          if (errorResponse.error && errorResponse.error.message) {
-            this._snackBar.open(errorResponse.error.message);
-          } else {
-            this._snackBar.open('Ошибка регистрации');
-          }
-        },
-      });
+            this._snackBar.open('Вы успешно зарегистрировались');
+            this.router.navigate(['/']);
+          },
+          error: (errorResponse: HttpErrorResponse) => {
+            if (errorResponse.error && errorResponse.error.message) {
+              this._snackBar.open(errorResponse.error.message);
+            } else {
+              this._snackBar.open('Ошибка регистрации');
+            }
+          },
+        });
     }
   }
 }

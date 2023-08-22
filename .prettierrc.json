@@ -1,11 +1,8 @@
 {
-  "printWidth": 10000,
-  "tabWidth": 2,
-  "useTabs": false,
   "semi": true,
-  "singleQuote": true,
   "trailingComma": "all",
-  "jsxBracketSameLine": false,
-  "arrowParens": "avoid",
-  "proseWrap": "never"
+  "singleQuote": true,
+  "printWidth": 135,
+  "tabWidth": 2,
+  "arrowParens": "avoid"
 }

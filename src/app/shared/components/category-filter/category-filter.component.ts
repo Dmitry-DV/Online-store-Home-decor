@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { activeParamsType } from 'src/types/active-params.type';
 import { CategoryWithTypeType } from 'src/types/category-with-type.type';
+import { activeParamsUtils } from '../../utils/active-params.utils';
 
 @Component({
   selector: 'category-filter',
@@ -34,37 +35,7 @@ export class CategoryFilterComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      const activeParams: activeParamsType = { types: [] };
-
-      if (params.hasOwnProperty('types')) {
-        activeParams.types = Array.isArray(params['types']) ? params['types'] : [params['types']];
-      }
-
-      if (params.hasOwnProperty('heightTo')) {
-        activeParams.heightTo = params['heightTo'];
-      }
-
-      if (params.hasOwnProperty('heightFrom')) {
-        activeParams.heightFrom = params['heightFrom'];
-      }
-
-      if (params.hasOwnProperty('diameterTo')) {
-        activeParams.diameterTo = params['diameterTo'];
-      }
-
-      if (params.hasOwnProperty('diameterFrom')) {
-        activeParams.diameterFrom = params['diameterFrom'];
-      }
-
-      if (params.hasOwnProperty('sort')) {
-        activeParams.sort = params['sort'];
-      }
-
-      if (params.hasOwnProperty('page')) {
-        activeParams.page = +params['page'];
-      }
-
-      this.activeParams = activeParams;
+      this.activeParams = activeParamsUtils.processParams(params);
 
       if (this.type) {
         if (this.type === 'height') {
@@ -81,7 +52,12 @@ export class CategoryFilterComponent implements OnInit {
           this.activeParams.types = Array.isArray(params['types']) ? params['types'] : [params['types']];
         }
 
-        if (this.categoryWithTypes && this.categoryWithTypes.types && this.categoryWithTypes.types.length > 0 && this.categoryWithTypes.types.some(type => this.activeParams.types.find(item => type.url === item))) {
+        if (
+          this.categoryWithTypes &&
+          this.categoryWithTypes.types &&
+          this.categoryWithTypes.types.length > 0 &&
+          this.categoryWithTypes.types.some(type => this.activeParams.types.find(item => type.url === item))
+        ) {
           this.open = true;
         }
       }

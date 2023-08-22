@@ -16,10 +16,22 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [AppComponent, LayoutComponent, HeaderComponent, FooterComponent, MainComponent],
-  imports: [BrowserModule, HttpClientModule, MatSnackBarModule, MatMenuModule, SharedModule, CarouselModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatMenuModule,
+    SharedModule,
+    CarouselModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+  ],
   providers: [
     //snackbar options
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: { duration: 2500 },
+    },
   ],
   bootstrap: [AppComponent],
 })
