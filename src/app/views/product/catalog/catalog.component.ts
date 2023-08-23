@@ -19,6 +19,7 @@ export class CatalogComponent implements OnInit {
   activeParams: activeParamsType = { types: [] };
   appliendFilters: AppliendFilterType[] = [];
   sortingOpen = false;
+  pages: number[] = [];
   sortingOptions: { name: string; value: string }[] = [
     { name: 'От А до Я', value: 'az-asc' },
     { name: 'От Я до А', value: 'az-desc' },
@@ -87,6 +88,10 @@ export class CatalogComponent implements OnInit {
 
     this.productService.getProducts().subscribe({
       next: data => {
+        this.pages = [];
+        for (let index = 1; index <= data.pages; index++) {
+          this.pages.push(index);
+        }
         this.products = data.items;
       },
     });
@@ -104,6 +109,7 @@ export class CatalogComponent implements OnInit {
       this.activeParams.types = this.activeParams.types.filter(item => item !== appliendFilter.urlParam);
     }
 
+    this.activeParams.page = 1;
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams,
     });
@@ -119,5 +125,30 @@ export class CatalogComponent implements OnInit {
     this.router.navigate(['/catalog'], {
       queryParams: this.activeParams,
     });
+  }
+
+  openPage(page: number) {
+    this.activeParams.page = page;
+    this.router.navigate(['/catalog'], {
+      queryParams: this.activeParams,
+    });
+  }
+
+  openPrevPage() {
+    if (this.activeParams.page && this.activeParams.page > 1) {
+      this.activeParams.page--;
+      this.router.navigate(['/catalog'], {
+        queryParams: this.activeParams,
+      });
+    }
+  }
+
+  openNextPage() {
+    if (this.activeParams.page && this.activeParams.page < this.pages.length) {
+      this.activeParams.page++;
+      this.router.navigate(['/catalog'], {
+        queryParams: this.activeParams,
+      });
+    }
   }
 }

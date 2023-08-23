@@ -136,8 +136,9 @@
         align-items: center;
         justify-content: center;
 
-        &:disabled {
+        &.disabled {
           opacity: 0.5;
+          cursor: not-allowed;
         }
       }
 
