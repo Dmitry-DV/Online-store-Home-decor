@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { debounce, debounceTime } from 'rxjs';
 import { CategoryService } from 'src/app/shared/services/category.service';
 import { ProductService } from 'src/app/shared/services/product.service';
-import { activeParamsUtils } from 'src/app/shared/utils/active-params.utils';
-import { activeParamsType } from 'src/types/active-params.type';
+import { ActiveParamsUtils } from 'src/app/shared/utils/active-params.utils';
+import { ActiveParamsType } from 'src/types/active-params.type';
 import { AppliendFilterType } from 'src/types/appliend-filter.type';
 import { CategoryWithTypeType } from 'src/types/category-with-type.type';
 import { ProductType } from 'src/types/product.type';
@@ -16,7 +17,7 @@ import { ProductType } from 'src/types/product.type';
 export class CatalogComponent implements OnInit {
   products: ProductType[] = [];
   categoriesWithTypes: CategoryWithTypeType[] = [];
-  activeParams: activeParamsType = { types: [] };
+  activeParams: ActiveParamsType = { types: [] };
   appliendFilters: AppliendFilterType[] = [];
   sortingOpen = false;
   pages: number[] = [];
@@ -39,8 +40,8 @@ export class CatalogComponent implements OnInit {
       next: data => {
         this.categoriesWithTypes = data;
 
-        this.activatedRoute.queryParams.subscribe(params => {
-          this.activeParams = activeParamsUtils.processParams(params);
+        this.activatedRoute.queryParams.pipe(debounceTime(500)).subscribe(params => {
+          this.activeParams = ActiveParamsUtils.processParams(params);
           this.appliendFilters = [];
           this.activeParams.types.forEach(url => {
             for (let index = 0; index < this.categoriesWithTypes.length; index++) {
@@ -82,17 +83,20 @@ export class CatalogComponent implements OnInit {
               urlParam: 'diameterTo',
             });
           }
-        });
-      },
-    });
 
-    this.productService.getProducts().subscribe({
-      next: data => {
-        this.pages = [];
-        for (let index = 1; index <= data.pages; index++) {
-          this.pages.push(index);
-        }
-        this.products = data.items;
+          this.productService.getProducts(this.activeParams).subscribe({
+            next: data => {
+              if (data.items.length === 0) {
+              }
+
+              this.pages = [];
+              for (let index = 1; index <= data.pages; index++) {
+                this.pages.push(index);
+              }
+              this.products = data.items;
+            },
+          });
+        });
       },
     });
   }

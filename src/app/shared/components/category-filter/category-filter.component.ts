@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { activeParamsType } from 'src/types/active-params.type';
+import { ActiveParamsType } from 'src/types/active-params.type';
 import { CategoryWithTypeType } from 'src/types/category-with-type.type';
-import { activeParamsUtils } from '../../utils/active-params.utils';
+import { ActiveParamsUtils } from '../../utils/active-params.utils';
 
 @Component({
   selector: 'category-filter',
@@ -11,7 +11,7 @@ import { activeParamsUtils } from '../../utils/active-params.utils';
 })
 export class CategoryFilterComponent implements OnInit {
   open: boolean = false;
-  activeParams: activeParamsType = { types: [] };
+  activeParams: ActiveParamsType = { types: [] };
   from: number | null = null;
   to: number | null = null;
 
@@ -35,7 +35,7 @@ export class CategoryFilterComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.activeParams = activeParamsUtils.processParams(params);
+      this.activeParams = ActiveParamsUtils.processParams(params);
 
       if (this.type) {
         if (this.type === 'height') {
