@@ -5,7 +5,7 @@ import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
   { path: 'catalog', component: CatalogComponent },
-  { path: 'details', component: DetailComponent },
+  { path: 'product/:url', component: DetailComponent },
 ];
 
 @NgModule({

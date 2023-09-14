@@ -5,9 +5,10 @@ import { ProductRoutingModule } from './product-routing.module';
 import { CatalogComponent } from './catalog/catalog.component';
 import { DetailComponent } from './detail/detail.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [CatalogComponent, DetailComponent],
-  imports: [CommonModule, SharedModule, ProductRoutingModule],
+  imports: [CommonModule, SharedModule, CarouselModule, ProductRoutingModule],
 })
 export class ProductModule {}
