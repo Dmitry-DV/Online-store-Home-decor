@@ -1,13 +1,13 @@
-<div class="detail">
+<div class="detail" *ngIf="product">
   <div class="container">
-    <div class="detail-title">Сансевиерия трехпучковая Муншайн</div>
+    <div class="detail-title">{{ product.name }}</div>
 
     <div class="detail-product">
-      <div class="detail-image" style="background-image: url('')"></div>
+      <div class="detail-image" style="background-image: url({{ serverStaticPath + product.image }})"></div>
 
       <div class="detail-info">
         <div class="detail-info-items">
-          <div class="detail-info-item">
+          <div class="detail-info-item" *ngIf="product.lightning">
             <div class="detail-info-item-icon">
               <svg width="53" height="55" viewBox="0 0 53 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -32,13 +32,11 @@
             <div class="detail-info-item-text">
               <div class="detail-info-item-title">Освещение</div>
               <div class="detail-info-item-description">
-                Сансевиерии понравится прямой свет северных, восточных и западных окон. Также её можно расположить под непрямым или
-                рассеянным освещением южного окна. Следите за листвой — при недостатке света её рост замедлится, а при переизбытке она
-                начнёт желтеть по краям
+                {{ product.lightning }}
               </div>
             </div>
           </div>
-          <div class="detail-info-item">
+          <div class="detail-info-item" *ngIf="product.humidity">
             <div class="detail-info-item-icon">
               <svg width="53" height="55" viewBox="0 0 53 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="26.2338" cy="27.5" rx="26.2338" ry="27.5" fill="white" />
@@ -70,13 +68,11 @@
             <div class="detail-info-item-text">
               <div class="detail-info-item-title">Влажность</div>
               <div class="detail-info-item-description">
-                Сансевиерии понравится прямой свет северных, восточных и западных окон. Также её можно расположить под непрямым или
-                рассеянным освещением южного окна. Следите за листвой — при недостатке света её рост замедлится, а при переизбытке она
-                начнёт желтеть по краям
+                {{ product.humidity }}
               </div>
             </div>
           </div>
-          <div class="detail-info-item">
+          <div class="detail-info-item" *ngIf="product.temperature">
             <div class="detail-info-item-icon">
               <svg width="53" height="55" viewBox="0 0 53 55" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="26.2338" cy="27.5" rx="26.2338" ry="27.5" fill="white" />
@@ -101,26 +97,24 @@
             <div class="detail-info-item-text">
               <div class="detail-info-item-title">Температура</div>
               <div class="detail-info-item-description">
-                Сансевиерии понравится прямой свет северных, восточных и западных окон. Также её можно расположить под непрямым или
-                рассеянным освещением южного окна. Следите за листвой — при недостатке света её рост замедлится, а при переизбытке она
-                начнёт желтеть по краям
+                {{ product.temperature }}
               </div>
             </div>
           </div>
         </div>
-        <div class="detail-info-param">
+        <div class="detail-info-param" *ngIf="product.height">
           <div class="detail-info-param-name">Высота:</div>
-          <div class="detail-info-param-data">26 см</div>
+          <div class="detail-info-param-data">{{ product.height }} см</div>
         </div>
-        <div class="detail-info-param">
+        <div class="detail-info-param" *ngIf="product.diameter">
           <div class="detail-info-param-name">Диаметр (горшка):</div>
-          <div class="detail-info-param-data">10 см</div>
+          <div class="detail-info-param-data">{{ product.diameter }} см</div>
         </div>
         <div class="detail-info-params">
           <div class="detail-info-params-count">
             <span>Колличесво: </span>
           </div>
-          <div class="detail-info-params-price">50 BYN</div>
+          <div class="detail-info-params-price">{{ product.price }} BYN</div>
         </div>
         <div class="detail-info-actions">
           <button class="button button-transparent button-icon">

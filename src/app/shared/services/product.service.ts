@@ -20,4 +20,8 @@ export class ProductService {
       params: params,
     });
   }
+
+  getProduct(url: string): Observable<ProductType> {
+    return this.http.get<ProductType>(environment.api + 'products/' + url);
+  }
 }
