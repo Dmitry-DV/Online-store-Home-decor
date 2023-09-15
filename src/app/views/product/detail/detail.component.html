@@ -113,6 +113,7 @@
         <div class="detail-info-params">
           <div class="detail-info-params-count">
             <span>Колличесво: </span>
+            <count-selector [count]="count" (onCountChange)="updataCount($event)"></count-selector>
           </div>
           <div class="detail-info-params-price">{{ product.price }} BYN</div>
         </div>
@@ -126,7 +127,7 @@
             </svg>
             <span>В избранное</span>
           </button>
-          <button class="button">В корзину</button>
+          <button class="button" (click)="addToCart()">В корзину</button>
         </div>
       </div>
     </div>

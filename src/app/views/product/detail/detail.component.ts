@@ -11,6 +11,7 @@ import { ProductType } from 'src/types/product.type';
   styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent {
+  count: number = 1;
   recomendedProducts: ProductType[] = [];
   product!: ProductType;
   serverStaticPath = environment.serverStaticPath;
@@ -57,5 +58,13 @@ export class DetailComponent {
         this.recomendedProducts = data;
       },
     });
+  }
+
+  updataCount(value: number) {
+    this.count = value;
+  }
+
+  addToCart() {
+    alert('Добавлено в корзину: ' + this.count);
   }
 }
