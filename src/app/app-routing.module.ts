@@ -4,6 +4,7 @@ import { LayoutComponent } from './shared/layout/layout.component';
 import { MainComponent } from './views/main/main.component';
 import { UserModule } from './views/user/user.module';
 import { ProductModule } from './views/product/product.module';
+import { OrderModule } from './views/order/order.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./views/product/product.module').then(m => m.ProductModule),
+      },
+      {
+        path: '',
+        loadChildren: () => import('./views/order/order.module').then(m => m.OrderModule),
       },
     ],
   },

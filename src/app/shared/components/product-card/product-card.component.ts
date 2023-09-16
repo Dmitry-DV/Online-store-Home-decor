@@ -9,6 +9,7 @@ import { ProductType } from 'src/types/product.type';
 })
 export class ProductCardComponent {
   @Input() product!: ProductType;
+  @Input() isLight: boolean = false;
   serverStaticPath = environment.serverStaticPath;
   count: number = 1;
 }
