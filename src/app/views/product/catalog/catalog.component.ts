@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounce, debounceTime } from 'rxjs';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { CategoryService } from 'src/app/shared/services/category.service';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { ActiveParamsUtils } from 'src/app/shared/utils/active-params.utils';
 import { ActiveParamsType } from 'src/types/active-params.type';
 import { AppliendFilterType } from 'src/types/appliend-filter.type';
+import { CartType } from 'src/types/cart.type';
 import { CategoryWithTypeType } from 'src/types/category-with-type.type';
 import { ProductType } from 'src/types/product.type';
 
@@ -27,15 +29,23 @@ export class CatalogComponent implements OnInit {
     { name: 'По возрастанию цены', value: 'price-asc' },
     { name: 'По убыванию цены', value: 'price-desc' },
   ];
+  cart: CartType | null = null;
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private cartService: CartService,
   ) {}
 
   ngOnInit(): void {
+    this.cartService.getCart().subscribe({
+      next: (data: CartType) => {
+        this.cart = data;
+      },
+    });
+
     this.categoryService.getCategoriesWithTypes().subscribe({
       next: data => {
         this.categoriesWithTypes = data;
@@ -93,7 +103,20 @@ export class CatalogComponent implements OnInit {
               for (let index = 1; index <= data.pages; index++) {
                 this.pages.push(index);
               }
-              this.products = data.items;
+
+              if (this.cart && this.cart.items.length > 0) {
+                this.products = data.items.map(product => {
+                  if (this.cart) {
+                    const productInCart = this.cart.items.find(item => item.product.id === product.id);
+                    if (productInCart) {
+                      product.countInCart = productInCart.quantity;
+                    }
+                  }
+                  return product;
+                });
+              } else {
+                this.products = data.items;
+              }
             },
           });
         });

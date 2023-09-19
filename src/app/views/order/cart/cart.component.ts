@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { ProductService } from 'src/app/shared/services/product.service';
+import { environment } from 'src/environments/environment.development';
+import { CartType } from 'src/types/cart.type';
 import { ProductType } from 'src/types/product.type';
 
 @Component({
@@ -10,6 +13,10 @@ import { ProductType } from 'src/types/product.type';
 })
 export class CartComponent implements OnInit {
   extraProducts: ProductType[] = [];
+  cart: CartType | null = null;
+  serverStaticPath = environment.serverStaticPath;
+  totalAmount: number = 0;
+  totalCount: number = 0;
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: false,
@@ -36,7 +43,7 @@ export class CartComponent implements OnInit {
     nav: false,
   };
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.productService.getBestProducts().subscribe({
@@ -44,5 +51,34 @@ export class CartComponent implements OnInit {
         this.extraProducts = data;
       },
     });
+
+    this.cartService.getCart().subscribe({
+      next: (data: CartType) => {
+        this.cart = data;
+        this.calculateTotal();
+      },
+    });
+  }
+
+  calculateTotal() {
+    this.totalAmount = 0;
+    this.totalCount = 0;
+    if (this.cart) {
+      this.cart.items.forEach(item => {
+        this.totalAmount += item.quantity * item.product.price;
+        this.totalCount += item.quantity;
+      });
+    }
+  }
+
+  updataCount(id: string, count: number) {
+    if (this.cart) {
+      this.cartService.updateCart(id, count).subscribe({
+        next: (data: CartType) => {
+          this.cart = data;
+          this.calculateTotal();
+        }
+      })
+    }
   }
 }

@@ -10,6 +10,20 @@
       @include head-lora-36;
     }
 
+    .cart-empty {
+      margin-top: 20px;
+      margin-bottom: 100px;
+
+      div {
+        font-size: 16px;
+      }
+
+      .button {
+        width: 255px;
+        margin-top: 10px;
+      }
+    }
+
     .cart-info {
       display: flex;
       justify-content: space-between;
@@ -122,14 +136,13 @@
         justify-content: space-between;
 
         .button {
-            width: 234px;
+          width: 234px;
 
-            &.button-transparent {
-                width: 255px;
-                margin-right: 12px;
-                color: #6CAC72;
-
-            }
+          &.button-transparent {
+            width: 255px;
+            margin-right: 12px;
+            color: #6cac72;
+          }
         }
       }
     }
