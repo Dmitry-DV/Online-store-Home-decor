@@ -96,9 +96,6 @@ export class CatalogComponent implements OnInit {
 
           this.productService.getProducts(this.activeParams).subscribe({
             next: data => {
-              if (data.items.length === 0) {
-              }
-
               this.pages = [];
               for (let index = 1; index <= data.pages; index++) {
                 this.pages.push(index);
