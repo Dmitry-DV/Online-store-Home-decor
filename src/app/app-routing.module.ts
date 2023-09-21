@@ -5,7 +5,7 @@ import { MainComponent } from './views/main/main.component';
 import { UserModule } from './views/user/user.module';
 import { ProductModule } from './views/product/product.module';
 import { OrderModule } from './views/order/order.module';
-import { AuthForwardGuard } from './core/auth/auth-forward.guard';
+import { AuthForwardGuard } from './core/auth/auth.forward.guard';
 import { AuthGuard } from './core/auth/auth.guard';
 
 const routes: Routes = [

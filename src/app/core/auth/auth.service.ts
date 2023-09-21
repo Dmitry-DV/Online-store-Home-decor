@@ -20,6 +20,18 @@ export class AuthService {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey);
   }
 
+  get userId(): null | string {
+    return localStorage.getItem(this.userIdKey);
+  }
+
+  set userId(id: string | null) {
+    if (id) {
+      localStorage.setItem(this.userIdKey, id);
+    } else {
+      localStorage.removeItem(this.userIdKey);
+    }
+  }
+
   signup(email: string, password: string, passwordRepeat: string): Observable<DefaultResponseType | LoginResponseType> {
     return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'signup', {
       email,
@@ -73,15 +85,16 @@ export class AuthService {
     };
   }
 
-  get userId(): null | string {
-    return localStorage.getItem(this.userIdKey);
+  refresh(): Observable<DefaultResponseType | LoginResponseType> {
+    const tokens = this.getTokens();
+    if (tokens && tokens.refreshToken) {
+      return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'refresh', {
+        refreshToken: tokens.refreshToken,
+      });
+    }
+
+    throw throwError(() => 'Can not use token');
   }
 
-  set userId(id: string | null) {
-    if (id) {
-      localStorage.setItem(this.userIdKey, id);
-    } else {
-      localStorage.removeItem(this.userIdKey);
-    }
-  }
+  
 }
