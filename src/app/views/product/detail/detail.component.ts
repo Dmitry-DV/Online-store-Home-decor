@@ -65,9 +65,14 @@ export class DetailComponent {
           this.product = data;
 
           this.cartService.getCart().subscribe({
-            next: (cartData: CartType) => {
-              if (cartData) {
-                const productInCart = cartData.items.find(item => item.product.id === this.product.id);
+            next: (cartData: CartType | DefaultResponseType) => {
+              if ((cartData as DefaultResponseType).error == !undefined) {
+                throw new Error((cartData as DefaultResponseType).message);
+              }
+
+              const cartDataResponse = cartData as CartType;
+              if (cartDataResponse) {
+                const productInCart = cartDataResponse.items.find(item => item.product.id === this.product.id);
                 if (productInCart) {
                   this.product.countInCart = productInCart.quantity;
                   this.count = this.product.countInCart;
@@ -106,7 +111,11 @@ export class DetailComponent {
     this.count = value;
     if (this.product.countInCart) {
       this.cartService.updateCart(this.product.id, this.count).subscribe({
-        next: (data: CartType) => {
+        next: (data: CartType | DefaultResponseType) => {
+          if ((data as DefaultResponseType).error == !undefined) {
+            throw new Error((data as DefaultResponseType).message);
+          }
+
           this.product.countInCart = this.count;
         },
       });
@@ -115,7 +124,11 @@ export class DetailComponent {
 
   addToCart() {
     this.cartService.updateCart(this.product.id, this.count).subscribe({
-      next: (data: CartType) => {
+      next: (data: CartType | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error == !undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+
         this.product.countInCart = this.count;
       },
     });
@@ -123,7 +136,11 @@ export class DetailComponent {
 
   removeFromCart() {
     this.cartService.updateCart(this.product.id, 0).subscribe({
-      next: (data: CartType) => {
+      next: (data: CartType | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error == !undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+
         this.product.countInCart = 0;
         this.count = 1;
       },
