@@ -18,7 +18,7 @@ export class FavoriteComponent implements OnInit {
   ngOnInit(): void {
     this.favoriteService.getFavorites().subscribe({
       next: (data: FavoriteType[] | DefaultResponseType) => {
-        if ((data as DefaultResponseType).error == !undefined) {
+        if ((data as DefaultResponseType).error !== undefined) {
           const error = (data as DefaultResponseType).message;
           throw new Error(error);
         }

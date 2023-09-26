@@ -55,7 +55,7 @@ export class CartComponent implements OnInit {
 
     this.cartService.getCart().subscribe({
       next: (data: CartType | DefaultResponseType) => {
-        if ((data as DefaultResponseType).error == !undefined) {
+        if ((data as DefaultResponseType).error !== undefined) {
           throw new Error((data as DefaultResponseType).message);
         }
         this.cart = data as CartType;
@@ -79,7 +79,7 @@ export class CartComponent implements OnInit {
     if (this.cart) {
       this.cartService.updateCart(id, count).subscribe({
         next: (data: CartType | DefaultResponseType) => {
-          if ((data as DefaultResponseType).error == !undefined) {
+          if ((data as DefaultResponseType).error !== undefined) {
             throw new Error((data as DefaultResponseType).message);
           }
           this.cart = data as CartType;

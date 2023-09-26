@@ -84,7 +84,7 @@ export class DetailComponent {
           if (this.authService.getIsLoggedIn()) {
             this.favoriteService.getFavorites().subscribe({
               next: (data: FavoriteType[] | DefaultResponseType) => {
-                if ((data as DefaultResponseType).error == !undefined) {
+                if ((data as DefaultResponseType).error !== undefined) {
                   const error = (data as DefaultResponseType).message;
                   throw new Error(error);
                 }
@@ -112,7 +112,7 @@ export class DetailComponent {
     if (this.product.countInCart) {
       this.cartService.updateCart(this.product.id, this.count).subscribe({
         next: (data: CartType | DefaultResponseType) => {
-          if ((data as DefaultResponseType).error == !undefined) {
+          if ((data as DefaultResponseType).error !== undefined) {
             throw new Error((data as DefaultResponseType).message);
           }
 
@@ -125,7 +125,7 @@ export class DetailComponent {
   addToCart() {
     this.cartService.updateCart(this.product.id, this.count).subscribe({
       next: (data: CartType | DefaultResponseType) => {
-        if ((data as DefaultResponseType).error == !undefined) {
+        if ((data as DefaultResponseType).error !== undefined) {
           throw new Error((data as DefaultResponseType).message);
         }
 
@@ -137,7 +137,7 @@ export class DetailComponent {
   removeFromCart() {
     this.cartService.updateCart(this.product.id, 0).subscribe({
       next: (data: CartType | DefaultResponseType) => {
-        if ((data as DefaultResponseType).error == !undefined) {
+        if ((data as DefaultResponseType).error !== undefined) {
           throw new Error((data as DefaultResponseType).message);
         }
 

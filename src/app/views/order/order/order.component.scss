@@ -148,7 +148,7 @@
             }
 
             &:last-child {
-                margin-bottom: 0;
+              margin-bottom: 0;
               .order-details-info-item-text,
               .order-details-info-item-data {
                 font-family: Montserrat, sans-serif;
@@ -159,9 +159,36 @@
         }
 
         .button {
-            width: 100%;
+          width: 100%;
         }
       }
     }
+  }
+}
+
+.order-popup {
+  padding: 100px 70px 220px;
+  position: relative;
+  text-align: center;
+  color: $green-text-color;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-image: url(../../../../assets/images/page/opder-image.png);
+
+  .order-popup-close {
+    position: absolute;
+    cursor: pointer;
+    top: 30px;
+    right: 30px;
+  }
+
+  .order-popup-title {
+    @include head-lora-32;
+    margin-bottom: 40px;
+  }
+
+  .order-popup-content div {
+    font-size: 20px;
+    margin-bottom: 5px;
   }
 }
