@@ -4,13 +4,16 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { OrderService } from 'src/app/shared/services/order.service';
+import { UserService } from 'src/app/shared/services/user.service';
 import { CartType } from 'src/types/cart.type';
 import { DefaultResponseType } from 'src/types/default-response.type';
 import { DeliveryType } from 'src/types/delivery.type';
 import { OrderType } from 'src/types/order.type';
 import { PaymentType } from 'src/types/payment.type';
+import { UserInfoType } from 'src/types/user-info.type';
 
 @Component({
   selector: 'app-order',
@@ -49,6 +52,8 @@ export class OrderComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private orderService: OrderService,
+    private userService: UserService,
+    private authService: AuthService,
   ) {
     this.updateDeliveryTypeValidation();
   }
@@ -68,6 +73,38 @@ export class OrderComponent implements OnInit {
         this.calculateTotal();
       },
     });
+
+    if (this.authService.getIsLoggedIn()) {
+      this.userService.getUserInfo().subscribe({
+        next: (data: UserInfoType | DefaultResponseType) => {
+          if ((data as DefaultResponseType).error !== undefined) {
+            throw new Error((data as DefaultResponseType).message);
+          }
+
+          const userInfo = data as UserInfoType;
+
+          const paramsToUpdate = {
+            firstName: userInfo.firstName ? userInfo.firstName : '',
+            lastName: userInfo.lastName ? userInfo.lastName : '',
+            phone: userInfo.phone ? userInfo.phone : '',
+            fatherName: userInfo.fatherName ? userInfo.fatherName : '',
+            paymentType: userInfo.paymentType ? userInfo.paymentType : PaymentType.cashToCourier,
+            email: userInfo.email ? userInfo.email : '',
+            street: userInfo.street ? userInfo.street : '',
+            house: userInfo.house ? userInfo.house : '',
+            entrance: userInfo.entrance ? userInfo.entrance : '',
+            apartment: userInfo.apartment ? userInfo.apartment : '',
+            comment: '',
+          };
+
+          this.orderForm.setValue(paramsToUpdate);
+
+          if (userInfo.deliveryType) {
+            this.deliveryType = userInfo.deliveryType;
+          }
+        },
+      });
+    }
   }
 
   calculateTotal() {
@@ -162,7 +199,7 @@ export class OrderComponent implements OnInit {
       });
     } else {
       this.orderForm.markAllAsTouched();
-      this._snackBar.open("Заполните необходимые поля");
+      this._snackBar.open('Заполните необходимые поля');
     }
   }
 
