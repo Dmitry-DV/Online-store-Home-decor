@@ -30,14 +30,14 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./views/personal/personal.module').then(m => m.PersonalModule),
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
       },
     ],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { anchorScrolling: 'enabled'})], // ,scrollPositionRestoration: 'enabled' 
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

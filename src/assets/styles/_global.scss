@@ -183,3 +183,8 @@ a.button {
   -webkit-transform: scale(1);
   transform: scale(1);
 }
+
+
+.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke:  #648f64 !important;
+}
