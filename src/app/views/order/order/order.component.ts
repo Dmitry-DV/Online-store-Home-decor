@@ -140,6 +140,7 @@ export class OrderComponent implements OnInit {
   }
 
   createOrder() {
+    this.updateDeliveryTypeValidation();
     if (
       this.orderForm.valid &&
       this.orderForm.value.firstName &&
