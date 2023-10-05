@@ -38,8 +38,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-
     this.searchField.valueChanges.pipe(debounceTime(500)).subscribe({
       next: value => {
         if (value && value.length > 2) {
@@ -59,14 +57,7 @@ export class HeaderComponent implements OnInit {
       this.isLogged = isLoggedIn;
     });
 
-    this.cartService.getCartCount().subscribe({
-      next: (data: { count: number } | DefaultResponseType) => {
-        if ((data as DefaultResponseType).error !== undefined) {
-          throw new Error((data as DefaultResponseType).message);
-        }
-        this.count = (data as { count: number }).count;
-      },
-    });
+    this.getCart();
 
     this.cartService.count$.subscribe({
       next: count => {
@@ -91,12 +82,24 @@ export class HeaderComponent implements OnInit {
     this.authService.userId = null;
     this._snackBar.open('Вы вышли из системы');
     this.router.navigate(['/']);
+    this.getCart();
   }
 
   selectProduct(productUrl: string) {
     this.router.navigate(['/product/' + productUrl]);
     this.searchField.setValue('');
     this.products = [];
+  }
+
+  getCart() {
+    this.cartService.getCartCount().subscribe({
+      next: (data: { count: number } | DefaultResponseType) => {
+        if ((data as DefaultResponseType).error !== undefined) {
+          throw new Error((data as DefaultResponseType).message);
+        }
+        this.count = (data as { count: number }).count;
+      },
+    });
   }
 
   @HostListener('document:click', ['$event'])

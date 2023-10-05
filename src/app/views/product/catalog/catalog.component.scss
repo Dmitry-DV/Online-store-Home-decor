@@ -120,6 +120,13 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 26px 30px;
+        position: relative;
+      }
+
+      .catalog-products-null {
+        padding-top: 50px;
+        color: $gray-text-color;
+        font-size: 16px;
       }
     }
 

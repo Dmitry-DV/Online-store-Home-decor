@@ -16,11 +16,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-card.component.scss'],
 })
 export class ProductCardComponent implements OnInit {
+  serverStaticPath = environment.serverStaticPath;
+  count: number = 1;
+  isLogged: boolean = false;
+
   @Input() product!: ProductType;
   @Input() isLight: boolean = false;
   @Input() countInCart: number | undefined = 0;
-  serverStaticPath = environment.serverStaticPath;
-  count: number = 1;
 
   constructor(
     private router: Router,
@@ -28,7 +30,9 @@ export class ProductCardComponent implements OnInit {
     private favoriteService: FavoriteService,
     private _snackBar: MatSnackBar,
     private authService: AuthService,
-  ) {}
+  ) {
+    this.isLogged = this.authService.getIsLoggedIn();
+  }
 
   ngOnInit(): void {
     if (this.countInCart && this.countInCart > 1) {

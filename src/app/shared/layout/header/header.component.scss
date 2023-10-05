@@ -149,6 +149,7 @@ header.header {
           background-color: #fff;
           border-radius: 5px;
           border: 1px solid #ebebeb;
+          z-index: 9999;
 
           .search-product {
             display: flex;

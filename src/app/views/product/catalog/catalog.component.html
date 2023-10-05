@@ -48,6 +48,7 @@
       <div class="catalog-products">
         <product-card [countInCart]="product.countInCart" *ngFor="let product of products" [product]="product"></product-card>
       </div>
+      <div class="catalog-products-null" *ngIf="!products || products.length === 0">Продукты не найдены, попробуйте сменить параметры поиска.</div>
     </div>
 
     <div class="pagination" *ngIf="pages.length > 1">
